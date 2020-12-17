@@ -1,8 +1,7 @@
 # Background
-A central problem in Bayesian deep learning (BDL) modelling is uncertainty evaluation, i.e. which models give reasonable epistemic and aleatoric uncertainty estimates. This is a difficult problem to solve because high-dimensional data cannot be visualized in a meaningful way. This problem was encountered early in AM 207. Recall from HW2 that using naive methods for uncertainty evaluation, such as computing the marginal log-likelihood of the data under the posterior, gave misleading results when compared to a visualization of the data and the 95% posterior predictive interval. 
+A central problem in Bayesian deep learning (BDL) modeling is uncertainty evaluation, i.e. which models give reasonable epistemic and aleatoric uncertainty estimates. This is a difficult problem to solve because high-dimensional data cannot be visualized in a meaningful way. This problem was encountered early in AM 207. Recall from HW2 that using naive methods for uncertainty evaluation, such as computing the marginal log-likelihood of the data under the posterior, gave misleading results when compared to a visualization of the data and the 95% posterior predictive interval. 
 
 As a result of this difficulty, a set of standardized "benchmarks", or training data, have naturally arisen in the BDL community. One popular benchmark is the UCI datasets, which is a repository of (among other things) classification and regression training data. These benchmarks have well established uncertainty estimates, and in some cases can be meaningfully visualized $^{1}$. These standardized benchmarks are used as training data whenever a new BDL model is proposed. Since the uncertainties are known for these training sets, the proposed model uncertainty estimates can be used as a metric for how well the model fits the data.
-
 
 
 # Problem Statement
@@ -81,7 +80,7 @@ Robustness to distribution shift is evaluated by training on the diabetic retino
 
 
 # Evaluation 
-The paper Filos et al. is overall a well written paper which extends on previous work done by Leibig et al. to build an open-source benchmark with straightforward uncertainty estimates for diagnosing diabetic retinopathy. There is no doubt that the paper will allow for researchers with little medical experience to more easily use state-of-the art BDL algorithms that diagnose diabetic retinopathy. Further claims made by the paper, however, such as claiming that the uncertainty estimates are robust to OOD data and distributional shifts, along with the claim that the diabetic retinopathy benchmark should replace UCI as the standard benchmark for the BDL community, are at best shaky. 
+The paper Filos et al. is overall a well-written paper which builds on previous work done by Leibig et al. to build an open-source benchmark with straightforward uncertainty estimates for diagnosing diabetic retinopathy. There is no doubt that the paper will allow for researchers with little medical experience to more easily use state-of-the art BDL algorithms that diagnose diabetic retinopathy. Further claims made by the paper, however, such as claiming that the uncertainty estimates are robust to OOD data and distributional shifts, along with the claim that the diabetic retinopathy benchmark should replace UCI as the standard benchmark for the BDL community, are at best shaky. 
 
 First, the evidence presented by Filos et al. for why their uncertainty estimate metrics are robust to OOD and distributional shift is Fig 5c and 5d. In these figures, all methods were trained using the Kaggle Diabetic Retinopathy (DR) Detection Challenge dataset, and tested on images taken from the APTOS Blindness Detection, which is from India. Though it is true that the APTOS dataset comes from a different country with different medical equipment, medical procedures and equipment tend to be standardized even across different countries. There is no reason to expect medical equipment from the United States to vary in any statistically significant way from those in India. Additionally, both the Kaggle and APTOS images were most likely taken under similar circumstances. It is not clear to the members of this group why the Kaggle and APTOS images must be neccessarily from different distributions or why a large distributional shift is expected among these two datasets. It follows that the members of this group do not believe the conclusion from Filos et al. that the uncertainty estimates are robust to OOD data and distributional shift. 
 
@@ -107,7 +106,6 @@ We will run simplified versions of the methods developed in Filos et al. on 2D t
 4. Different shaped Gaussian blobs
 
 
-
 To begin with, all our methods (except for MFVI) are neural networks of the following form:
 \begin{align}
 \mathbf{W} &\sim \mathcal{N}(0, \sigma_{W}^2 \mathbf{I}_{D\times D})\\
@@ -117,3 +115,6 @@ Y^{(n)} &\sim Ber(\text{sigm}(\mathbf{w}^{(n)}))
 
 
 We modified the neural network and BBVI code from class to implement MFVI, deterministic, MC dropout, and deterministic ensembles. We fine-tuned each model to each toy data set type. We generated data with equal positive and negative classifications to avoid the class imbalance problem that Filos et al. faced. Finally, instead of generating ROC plots, we used the binary accuracy of each model to measure its uncertainty. 
+
+
+
