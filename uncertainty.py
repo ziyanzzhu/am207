@@ -15,6 +15,7 @@ import pandas as pd
 import numpy 
 import scipy as sp
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 '''
 def myentropy(nn_model, weightlist, xdata):
     
@@ -47,15 +48,27 @@ def myentropy(nn_model, weightlist, xdata):
 def myentropy(nn_model, weightlist, xdata, returnallp=False):
     '''
     Assumes xdata has shape 2xNsamples
+=======
+
+def myentropy(nn_model, weightlist, xdata):
+    '''
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
     Usage: for NN_Dropout, use the same weights, duplicated N times
     for MFVI, pass the sampled weights
     '''
 
     #assert xdata.shape[0]==2
     n_samples = xdata.shape[1]
+<<<<<<< HEAD
     p1narray = np.zeros((len(weightlist), n_samples)) #NWeightSamples x NPoints
     if type(nn_model) != list: 
         for i, w in enumerate(weightlist):
+=======
+    p1narray = np.zeros((len(weightlist), n_samples))
+    if type(nn_model) != list: 
+        for i, w in enumerate(weightlist):
+#             print(w.shape)
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
             w = np.reshape(w, (1, nn_model.D))
             p1narray[i, :] = nn_model.forward(w, xdata) #assumes that the 'model.forward' is dropout-like and has generates different outputs for each i
     elif type(nn_model) == list: # deterministic 
@@ -63,6 +76,7 @@ def myentropy(nn_model, weightlist, xdata, returnallp=False):
 
             p1narray[i, :] = nn.forward(weightlist[i], xdata)
     #print (p_here.shape)
+<<<<<<< HEAD
     certainpts = np.logical_or(np.all(p1narray==0, axis=0), np.all(p1narray==1, axis=0)) 
 
     p2narray = 1 - p1narray
@@ -74,6 +88,13 @@ def myentropy(nn_model, weightlist, xdata, returnallp=False):
         return p1narray, p1narraym, Hpredcheck
     else:
         return p1narraym, Hpredcheck
+=======
+    p2narray = 1 - p1narray
+    p1narray = np.mean(p1narray, axis=0)
+    p2narray = np.mean(p2narray, axis=0)
+    Hpredcheck = -p1narray*np.log(p1narray) - p2narray*np.log(p2narray)
+    return p1narray, Hpredcheck
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
 # calculate the accuracy for MC dropout
 def auc_calc(x_test, y_test, nn, N, perc, model, weightlist=None): 
@@ -107,6 +128,7 @@ def auc_calc(x_test, y_test, nn, N, perc, model, weightlist=None):
         
     return auc
 
+<<<<<<< HEAD
 # calculate the accuracy for MC dropout
 def auc_calc_beta(x_test, y_test, nn, N, perc, model, weightlist=None): 
     ''' 
@@ -139,6 +161,8 @@ def auc_calc_beta(x_test, y_test, nn, N, perc, model, weightlist=None):
     else: 
         auc = auc_calc_proba(x_test, y_test, nn, N, perc)
         return auc #this only returns the mean accuracy
+=======
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
 # calculate the accuracy for deterministic model
 def auc_calc_proba(x_test, y_test, nn, N, perc):
@@ -158,12 +182,37 @@ def auc_calc_proba(x_test, y_test, nn, N, perc):
         auc[j] = (len(y0[y0==0]) + len(y1[y1==1]))/(len(y0) + len(y1)) * 100
     return auc
 
+<<<<<<< HEAD
 #def auc_calc_bbvi(x_test, y_test, 
 
 # NEED TO PLOT THE TRAINING DATA SEPARATELY!
 def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test_points=None, shaded=True, interval=np.arange(-6, 6, 0.1)):
     '''    
     '''
+=======
+def auc_calc_bbvi(x_test, y_test, 
+
+# NEED TO PLOT THE TRAINING DATA SEPARATELY!
+def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test_points=None, shaded=True, interval=np.arange(-6, 6, 0.1)):
+    '''
+    plot_decision_boundary plots the training data and the decision boundary of the classifier.
+    input:
+       x - a numpy array of size N x 2, each row is a patient, each column is a biomarker
+       y - a numpy array of length N, each entry is either 0 (no cancer) or 1 (cancerous)
+       models - an array of classification models
+       ax - axis to plot on
+       poly_degree - the degree of polynomial features used to fit the model
+       test_points - test data
+       shaded - whether or not the two sides of the decision boundary are shaded
+    returns: 
+       ax - the axis with the scatter plot
+    
+    '''
+    # Plot data
+    # ax.scatter(x[y == 1, 0], x[y == 1, 1], alpha=0.2, c='red', label='class 1')
+    # ax.scatter(x[y == 0, 0], x[y == 0, 1], alpha=0.2, c='blue', label='class 0')
+    
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
     # Create mesh
     #interval = np.arange(-6, 6, 0.1)
     n = np.size(interval)
@@ -171,6 +220,7 @@ def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test
     x1 = x1.reshape(-1, 1)
     x2 = x2.reshape(-1, 1)
     xx = np.concatenate((x1, x2), axis=1)
+<<<<<<< HEAD
     # print ('xx', xx.shape)
     # Predict on mesh points
     
@@ -180,6 +230,18 @@ def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test
     cl = ax.imshow(yy, origin='lower', extent=(min(interval), max(interval), min(interval), max(interval)))
     
     ax.set_title(title)
+=======
+    print ('xx', xx.shape)
+    # Predict on mesh points
+    
+    yy = myentropy(model, weightlist, xx.T)[1] #change this to entropy func  
+    yy = yy.reshape((n, n))
+    
+    cl = plt.imshow(yy, origin='lower', extent=(min(interval), max(interval), min(interval), max(interval)))
+    plt.colorbar()
+    plt.title(title)
+    plt.show()
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
     
     if test_points is not None:
         for i in range(len(test_points)):
@@ -188,6 +250,7 @@ def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test
                 ax.scatter(pt[0], pt[1], alpha=1., s=50, color='black', label='test data')
             else:
                 ax.scatter(pt[0], pt[1], alpha=1., s=50, color='black')
+<<<<<<< HEAD
 
     lowb = interval[0]+0.5
     highb = interval[-1]-0.5    
@@ -200,6 +263,15 @@ def plot_entropycontours(x, y, model, weightlist, ax, title, poly_degree=1, test
 
 
 
+=======
+        
+    ax.set_xlim((-5.5, 5.5))
+    ax.set_ylim((-5.5, 5.5))
+    ax.set_xlabel('x_1')
+    ax.set_ylabel('x_2')
+    ax.legend(loc='best')
+    return ax
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
 if __name__ == '__main__':
     pass

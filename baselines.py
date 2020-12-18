@@ -94,17 +94,27 @@ class Feedforward:
         return output
 
     def make_objective(self, x_train, y_train, reg_param):
+<<<<<<< HEAD
         # updated objective function for classification
         def objective(W, t):
             #squared_error = np.linalg.norm(y_train - self.forward(W, x_train), axis=1)**2
             sig = self.forward(W, x_train).flatten()
             y_train_flat = y_train.flatten()
             squared_error = -np.dot(y_train_flat[y_train_flat == 1], np.log(sig[y_train_flat == 1])) - np.dot(1-y_train_flat[y_train_flat ==0], np.log(1-sig[y_train_flat==0]))
+=======
+
+        def objective(W, t):
+            squared_error = np.linalg.norm(y_train - self.forward(W, x_train), axis=1)**2
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
             if reg_param is None:
                 sum_error = np.sum(squared_error)
                 return sum_error
             else:
+<<<<<<< HEAD
                 mean_error = squared_error + reg_param * np.linalg.norm(W)
+=======
+                mean_error = np.mean(squared_error) + reg_param * np.linalg.norm(W)
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
                 return mean_error
 
         return objective, grad(objective)
@@ -120,7 +130,11 @@ class Feedforward:
         ### set up optimization
         step_size = 0.01
         max_iteration = 5000
+<<<<<<< HEAD
         check_point = 500
+=======
+        check_point = 100
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
         weights_init = self.weights.reshape((1, -1))
         mass = None
         optimizer = 'adam'
@@ -131,7 +145,11 @@ class Feedforward:
         if 'max_iteration' in params.keys():
             max_iteration = params['max_iteration']
         if 'check_point' in params.keys():
+<<<<<<< HEAD
             check_point = params['check_point']
+=======
+            self.check_point = params['check_point']
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
         if 'init' in params.keys():
             weights_init = params['init']
         if 'call_back' in params.keys():
@@ -256,15 +274,23 @@ class Feedforward_Dropout:
     def make_objective(self, x_train, y_train, reg_param):
 
         def objective(W, t):
+<<<<<<< HEAD
             #squared_error = np.linalg.norm(y_train - self.forward(W, x_train), axis=1)**2
             sig = self.forward(W, x_train).flatten()
             y_train_flat = y_train.flatten()
             squared_error = -np.dot(y_train_flat[y_train_flat == 1], np.log(sig[y_train_flat == 1])) - np.dot(1-y_train_flat[y_train_flat ==0], np.log(1-sig[y_train_flat==0]))
+=======
+            squared_error = np.linalg.norm(y_train - self.forward(W, x_train), axis=1)**2
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
             if reg_param is None:
                 sum_error = np.sum(squared_error)
                 return sum_error
             else:
+<<<<<<< HEAD
                 mean_error = squared_error + reg_param * np.linalg.norm(W)
+=======
+                mean_error = np.mean(squared_error) + reg_param * np.linalg.norm(W)
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
                 return mean_error
 
         return objective, grad(objective)
@@ -280,7 +306,11 @@ class Feedforward_Dropout:
         ### set up optimization
         step_size = 0.01
         max_iteration = 5000
+<<<<<<< HEAD
         check_point = 500
+=======
+        check_point = 100
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
         weights_init = self.weights.reshape((1, -1))
         mass = None
         optimizer = 'adam'
@@ -291,7 +321,11 @@ class Feedforward_Dropout:
         if 'max_iteration' in params.keys():
             max_iteration = params['max_iteration']
         if 'check_point' in params.keys():
+<<<<<<< HEAD
             check_point = params['check_point']
+=======
+            self.check_point = params['check_point']
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
         if 'init' in params.keys():
             weights_init = params['init']
         if 'call_back' in params.keys():
@@ -344,7 +378,11 @@ def ensemble(x_train, y_train, Feedforward, architecture, params, random, N_boot
         nn_here.fit(x_bootstrap.T, y_bootstrap.reshape((1,-1)), params, reg_param = reg_param)
         w_bootstrap.append(nn_here.weights)
         nn_all.append(nn_here)
+<<<<<<< HEAD
         print("Calculations done {}/{}".format(n_idx+1, N_bootstrap))
+=======
+        print("Calculations done {}/{}".format(n_idx, N_bootstrap))
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
     return nn_all, w_bootstrap
 
@@ -404,8 +442,11 @@ def variational_inference(Sigma_W, sigma_y, y_train, x_train, nn, forward, S, ma
     # define the log likelihood
     def log_lklhd(W):
         W = W.reshape(S, D)
+<<<<<<< HEAD
 
         '''
+=======
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
         # print (W.shape)
         p = np.squeeze(forward(W, x_train))
         # print("the size of p is ", p.shape, ", the size of y_train is ", y_train.shape)
@@ -416,6 +457,7 @@ def variational_inference(Sigma_W, sigma_y, y_train, x_train, nn, forward, S, ma
         ind1 = np.where(y_train==0)[0]
         ind2 = np.where(y_train==1)[0]
         # print('ind1 and ind2, p, lklh shape', ind1.shape, ind2.shape, p[:, ind1].shape, lklh[:,ind1].shape)
+<<<<<<< HEAD
         lklh = np.hstack((1-p[:,ind1],p[:,ind2]))
         # print('output lklhh shape is', np.sum(np.log(lklh),axis=1).shape)
         return np.sum(np.log(lklh),axis=1)
@@ -425,6 +467,11 @@ def variational_inference(Sigma_W, sigma_y, y_train, x_train, nn, forward, S, ma
         squared_error = np.dot(np.log(sig[:,y_train_flat == 1]),y_train_flat[y_train_flat == 1]) + np.dot(np.log(1-sig[:,y_train_flat==0]),1-y_train_flat[y_train_flat ==0])
         return squared_error
         
+=======
+        lklh = np.hstack((p[:,ind1],p[:,ind2]))
+        # print('output lklhh shape is', np.sum(np.log(lklh),axis=1).shape)
+        return np.sum(np.log(lklh),axis=1)
+>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
     # define the log joint density
     log_density = lambda w, t: log_prior(w) + log_lklhd(w) 
