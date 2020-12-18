@@ -77,7 +77,7 @@ def myentropy(nn_model, weightlist, xdata, returnallp=False):
         return p1narraym, Hpredcheck
 
 # =======
-#   p2narray = 1 - p1narray
+#    p2narray = 1 - p1narray
 #    p1narray = np.mean(p1narray, axis=0)
 #    p2narray = np.mean(p2narray, axis=0)
 #    Hpredcheck = -p1narray*np.log(p1narray) - p2narray*np.log(p2narray)
