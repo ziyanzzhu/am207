@@ -6,5 +6,5 @@
 - uncertainty.py: implementation of predictive entropy and the proposed uncertainty metric
 - util.py: plotting and test data generation scripts
 
-##Group Members: 
+## Group Members: 
 Ziyan Zhu, Nayantara Mudur, Felipe Gomez, Blake Duschatko
