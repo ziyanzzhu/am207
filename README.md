@@ -5,3 +5,6 @@
 - baselines.py: implementation of four baselines / models: Deterministic, Deep Ensemble, MC Dropout, and Mean-field variational inference
 - uncertainty.py: implementation of predictive entropy and the proposed uncertainty metric
 - util.py: plotting and test data generation scripts
+
+##Group Members: 
+Ziyan Zhu, Nayantara Mudur, Felipe Gomez, Blake Duschatko
