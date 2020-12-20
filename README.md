@@ -1,7 +1,7 @@
 # A Systematic Comparison of Bayesian Deep Learning Robustness in Diabetic Retinopathy Tasks
 
 ## File Descriptions
-- `writeup_final.ipynb`: summary and evaluation of the paper, numerical experiments and analysis
+- `writeup_final.ipynb`: summary and evaluation of the paper, numerical experiments and analysis. The main file uses functions and classes implemented in the three libraries below
 - `baselines.py`: implementation of four baselines / models: Deterministic, Deep Ensemble, MC Dropout, and Mean-field variational inference
 - `uncertainty.py`: implementation of predictive entropy and the proposed uncertainty metric
 - `utils.py`: plotting and test data generation scripts
