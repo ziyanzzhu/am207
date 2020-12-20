@@ -16,35 +16,7 @@ import numpy
 import scipy as sp
 import matplotlib.pyplot as plt
 
-'''
-def myentropy(nn_model, weightlist, xdata):
-    
-    #Assumes xdata has shape 2xNsamples
-    ##Usage: for NN_Dropout, use the same weights, duplicated N times
-    #for MFVI, pass the sampled weights
-    
 
-    #assert xdata.shape[0]==2
-    n_samples = xdata.shape[1]
-    p1narray = np.zeros((len(weightlist), n_samples)) #NWeightSamples x NPoints
-    if type(nn_model) != list: 
-        for i, w in enumerate(weightlist):
-            w = np.reshape(w, (1, nn_model.D))
-            p1narray[i, :] = nn_model.forward(w, xdata) #assumes that the 'model.forward' is dropout-like and has generates different outputs for each i
-    elif type(nn_model) == list: # deterministic 
-        for i, nn in enumerate(nn_model): 
-
-            p1narray[i, :] = nn.forward(weightlist[i], xdata)
-    #print (p_here.shape)
-    certainpts = np.logical_or(np.all(p1narray==0, axis=0), np.all(p1narray==1, axis=0)) 
-
-    p2narray = 1 - p1narray
-    p1narray = np.mean(p1narray, axis=0)
-    p2narray = np.mean(p2narray, axis=0)
-    Hpredcheck = -p1narray*np.log(p1narray) - p2narray*np.log(p2narray)
-    Hpredcheck[certainpts] = 0.0
-    return p1narray, Hpredcheck
-'''
 def myentropy(nn_model, weightlist, xdata, returnallp=False):
     '''
     Usage: for NN_Dropout, use the same weights, duplicated N times
@@ -76,13 +48,6 @@ def myentropy(nn_model, weightlist, xdata, returnallp=False):
     else:
         return p1narraym, Hpredcheck
 
-# =======
-#    p2narray = 1 - p1narray
-#    p1narray = np.mean(p1narray, axis=0)
-#    p2narray = np.mean(p2narray, axis=0)
-#    Hpredcheck = -p1narray*np.log(p1narray) - p2narray*np.log(p2narray)
-#    return p1narray, Hpredcheck
-#>>>>>>> a08c25b69ac8768b2b32d2fa3d5e240076410cbb
 
 # calculate the accuracy for MC dropout
 def auc_calc(x_test, y_test, nn, N, perc, model, weightlist=None): 
